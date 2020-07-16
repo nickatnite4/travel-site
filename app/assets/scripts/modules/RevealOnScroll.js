@@ -19,34 +19,35 @@ class RevealOnScroll {
     }
 
     calcCaller() {
-            this.itemsToReveal.forEach(el => {
-                if (el.isRevealed == false) {
-                    this.calculateIfScrolledTo(el)
-                }
-            })
-    }
-
-    calculateIfScrolledTo(el) {
-        if (window.scrollY + this.browserHeight > el.offsetTop) {
-            let scrollPercent = (el.getBoundingClientRect().top / this.browserHeight) * 100
-            if (scrollPercent < this.thresholdPercent) {
-                el.classList.add("reveal-item--is-visible")
-                el.isRevealed = true
-                if (el.isLastItem) {
-                    window.removeEventListener("scroll", this.scrollThrottle)
-                }
-            }
-        }
-    }
-
-
-    hideInitially() {
         this.itemsToReveal.forEach(el => {
-            el.classList.add("reveal-item")
-            el.isRevealed = false
+          if (el.isRevealed == false) {
+            this.calculateIfScrolledTo(el)
+          }
+        })
+      }
+
+      calculateIfScrolledTo(el) {
+        if (window.scrollY + this.browserHeight > el.offsetTop) {
+          console.log("Element was calculated")
+          let scrollPercent = (el.getBoundingClientRect().top / this.browserHeight) * 100
+          if (scrollPercent < this.thresholdPercent) {
+            el.classList.add("reveal-item--is-visible")
+            el.isRevealed = true
+            if (el.isLastItem) {
+              window.removeEventListener("scroll", this.scrollThrottle)
+            }
+          }
+        }
+      }
+
+
+      hideInitially() {
+        this.itemsToReveal.forEach(el => {
+          el.classList.add("reveal-item")
+          el.isRevealed = false
         })
         this.itemsToReveal[this.itemsToReveal.length - 1].isLastItem = true
-    }
+      }
 }
 
 export default RevealOnScroll;
